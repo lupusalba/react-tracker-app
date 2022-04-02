@@ -15,7 +15,7 @@ function App() {
       "id": 2,
       "text": "consectetur adipiscing",
       "day": "Apr 5th, at 11:00",
-      "reminder": true,
+      "reminder": false,
     }, {
       "id": 3,
       "text": "dolor sit amet",
@@ -25,19 +25,30 @@ function App() {
       "id": 4,
       "text": "Lorem ipsum",
       "day": "Apr 5th, at 11:00",
-      "reminder": true,
+      "reminder": false,
     }]
   )
 
   // Delete tasks 
   const deleteTask = (id) => {
-    console.log('delete', id)
+    setTasks(tasks.filter((task) => task.id !== id))
+  }
+  
+  //toggle reminder
+  const toggleReminder = (id) => {
+    setTasks(
+      tasks.map((task) => task.id === id ? { ...task, reminder: !task.reminder } : task
+      )
+    )
   }
 
   return (
     <div className="container">
       <Header />
-      <Tasks  tasks={tasks} onDelete={deleteTask} />
+      {tasks.length > 0 ? 
+      (<Tasks  tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder}/>) 
+      :
+      "No Tasks To show"}
     </div>
   );
 }
